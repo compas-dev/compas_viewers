@@ -210,7 +210,7 @@ class View(GLWidget):
                 # default selection color
                 face_color = '#ffff00'
             else:
-                face_color = m.color
+                face_color = m.settings.get("color", "#cccccc")
 
             faces_color = flist(hex_to_rgb(face_color) for key in m.view.xyz)
             faces_color_back = flist(hex_to_rgb(face_color) for key in m.view.xyz)

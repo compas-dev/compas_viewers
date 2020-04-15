@@ -53,7 +53,7 @@ class Manager(object):
             # vertices
             verticesitem = QtWidgets.QTreeWidgetItem(meshitem)
             verticesitem.setText(0, "Vertices")
-            for key in item.data.vertices():
+            for key in item.datastructure.vertices():
                 vertexitem = QtWidgets.QTreeWidgetItem(verticesitem)
                 vertexitem.setText(0, "{}".format(key))
             # edges
@@ -80,7 +80,7 @@ class Manager(object):
             meshobject = self._items[mid]
             if meshobject not in self.app.view.selected:
                 self.app.view.selected.add(meshobject)
-            mesh = meshobject.data
+            mesh = meshobject.datastructure
             if len(trail) > 0:
                 pass
             if len(trail) > 1:

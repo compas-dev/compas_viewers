@@ -88,14 +88,14 @@ class Controller(core.controller.Controller):
         # perhaps this should be a bestfit_frame
         # and a frame to frame transformation of all points
         # most certainly use numpy transformations
-        xyz = [_xyz for o in self.meshes for _xyz in o.data.get_vertices_attributes('xyz')]
+        xyz = [_xyz for o in self.meshes for _xyz in o.datastructure.get_vertices_attributes('xyz')]
         cx, cy, cz = centroid_points(xyz)
         for o in self.meshes:
-            for key, attr in o.data.vertices(True):
+            for key, attr in o.datastructure.vertices(True):
                 attr['x'] -= cx
                 attr['y'] -= cy
                 attr['z'] -= cz
-            o.view.mesh = o.data
+            o.view.mesh = o.datastructure
 
     # ==========================================================================
     # Slots

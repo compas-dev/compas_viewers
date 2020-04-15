@@ -28,9 +28,6 @@ class MeshObject(object):
         self._settings = {}
         self._settings.update(settings)
 
-        # TODO: DELETE AND REFACTOR THIS!!
-        self.data = datastructure
-        self.color = '#cccccc'
 
     @property
     def settings(self):
