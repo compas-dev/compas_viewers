@@ -12,9 +12,10 @@ from compas.geometry import Rotation
 from compas_viewers.multimeshviewer import MultiMeshViewer
 from compas_viewers.multimeshviewer import MeshObject
 
+
+viewer = MultiMeshViewer()
 # make 10 random meshes
 # with random position and orientation
-meshes = []
 for i in range(10):
     T = Translation([random.randint(0, 10), random.randint(0, 10), random.randint(0, 5)])
     R = Rotation.from_axis_and_angle([0, 0, 1.0], radians(random.randint(0, 180)))
@@ -24,8 +25,8 @@ for i in range(10):
     mesh_transform_numpy(mesh, X)
 
     # this is not ideal and should be handled behind the screens
-    meshes.append(MeshObject(mesh, color=rgb_to_hex((210, 210, 210))))
+    # meshes.append(MeshObject(mesh, color=rgb_to_hex((210, 210, 210))))
+    viewer.add(mesh, settings = {'color': rgb_to_hex((210, 210, 210))})
 
-viewer = MultiMeshViewer()
-viewer.meshes = meshes
+viewer.update()
 viewer.show()

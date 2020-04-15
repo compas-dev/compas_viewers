@@ -11,11 +11,35 @@ __all__ = ['MeshView', 'MeshObject']
 
 class MeshObject(object):
 
-    def __init__(self, mesh, color=None):
-        self.data = mesh
-        self.view = MeshView(mesh)
-        self.color = color or '#cccccc'
-        self.xforms = []
+    # def __init__(self, mesh, color=None):
+    #     self.data = mesh
+    #     self.view = MeshView(mesh)
+    #     self.color = color or '#cccccc'
+    #     self.xforms = []
+
+    def __init__(self, scene, datastructure, name=None, visible=True, settings={}, **kwargs):
+        self.scene = scene
+        self.datastructure = datastructure
+        self.name = name
+        self.guid = None
+        self.visible = visible
+        # self.artist = None
+        self.view = MeshView(datastructure)
+        self._settings = {}
+        self._settings.update(settings)
+
+        # TODO: DELETE AND REFACTOR THIS!!
+        self.data = datastructure
+        self.color = '#cccccc'
+
+    @property
+    def settings(self):
+        return self._settings
+
+    @settings.setter
+    def settings(self, settings):
+        return self._settings.update(settings)
+
 
 
 class MeshView(object):

@@ -8,7 +8,7 @@ from PySide2 import QtWidgets
 
 from compas_viewers.core import App
 
-from compas_viewers.multimeshviewer.model import MeshObject
+from compas_viewers.multimeshviewer import MeshObject
 from compas_viewers.multimeshviewer.view import View
 from compas_viewers.multimeshviewer.controller import Controller
 
@@ -133,28 +133,25 @@ class MultiMeshViewer(App):
         self.main.addDockWidget(QtCore.Qt.RightDockWidgetArea, self.sidebar2)
 
     @property
-    def meshes(self):
-        return self.controller.meshes
+    def scene(self):
+        # TODO: Where is it optimal to put scene ??
+        return self.controller.scene
 
-    @meshes.setter
-    def meshes(self, meshes):
-        temp = []
-        for mesh in meshes:
-            if not isinstance(mesh, MeshObject):
-                mesh = MeshObject(mesh)
-            temp.append(mesh)
-        self.controller.meshes = temp
+    @scene.setter
+    def scene(self, scene):
+        self.controller.scene = scene
         # self.controller.center()
-        self.manager.set_items(self.meshes)
+        self.update()
+
+    def add(self, mesh, *args, **kwargs):
+        self.scene.add(mesh, *args, **kwargs)
+        # self._update_items()
+
+    def update(self):
+        self.manager.set_items(self.view.meshes)
         self.view.glInit()
         self.view.make_buffers()
         self.view.updateGL()
-
-    # def add(self, mesh, name=None, color=None):
-    #     obj = MeshObject(mesh, color=color)
-    #     meshes = self.meshes
-    #     meshes.append(obj)
-    #     self.meshes = meshes
 
 
 # ==============================================================================

@@ -17,6 +17,8 @@ from compas.utilities import flatten
 
 from compas_viewers import core
 
+from .scene import Scene
+
 
 HERE = os.path.dirname(__file__)
 
@@ -63,7 +65,7 @@ class Controller(core.controller.Controller):
 
     def __init__(self, app):
         super(Controller, self).__init__(app)
-        self._meshes = []
+        self._scene = Scene()
         self._colors = []
 
     @property
@@ -75,12 +77,12 @@ class Controller(core.controller.Controller):
         return self.app.view
 
     @property
-    def meshes(self):
-        return self._meshes
+    def scene(self):
+        return self._scene
 
-    @meshes.setter
-    def meshes(self, meshes):
-        self._meshes = meshes
+    @scene.setter
+    def scene(self, scene):
+        self._scene = scene
 
     def center(self):
         # perhaps this should be a bestfit_frame

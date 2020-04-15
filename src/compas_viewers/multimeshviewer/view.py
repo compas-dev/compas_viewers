@@ -49,7 +49,7 @@ class View(GLWidget):
 
     @property
     def meshes(self):
-        return self.controller.meshes
+        return [self.controller.scene.nodes[key] for key in self.controller.scene.nodes]
 
     @property
     def settings(self):
