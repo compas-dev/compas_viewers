@@ -273,6 +273,32 @@ class View(GLWidget):
 
             glDisableClientState(GL_COLOR_ARRAY)
             glDisableClientState(GL_VERTEX_ARRAY)
+        
+        if self.mouse.buttons['right']:
+
+            self.sphere_buffer = {
+                'xyz': self.make_vertex_buffer(self.camera.target),
+                'vertices': self.make_index_buffer([0]),
+                'vertices.color': self.make_vertex_buffer([0.7,1,0], dynamic=True),
+                'v': 1
+            }
+
+            # draw sphere
+            glEnableClientState(GL_VERTEX_ARRAY)
+            glEnableClientState(GL_COLOR_ARRAY)
+            glBindBuffer(GL_ARRAY_BUFFER, self.sphere_buffer['xyz'])
+            glVertexPointer(3, GL_FLOAT, 0, None)
+
+            glPointSize(15)
+            glBindBuffer(GL_ARRAY_BUFFER, self.sphere_buffer['vertices.color'])
+            glColorPointer(3, GL_FLOAT, 0, None)
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self.sphere_buffer['vertices'])
+            glDrawElements(GL_POINTS, self.sphere_buffer['v'], GL_UNSIGNED_INT, None)
+
+            glDisableClientState(GL_COLOR_ARRAY)
+            glDisableClientState(GL_VERTEX_ARRAY)
+
+
 
     def draw_instances(self):
         # save out a instance map in background
