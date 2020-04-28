@@ -10,6 +10,7 @@ from compas_viewers.core import ColorButton
 from compas_viewers.core import Slider
 from compas_viewers.core import TextEdit
 
+from compas_traits import *
 
 __all__ = ['App']
 
@@ -172,31 +173,26 @@ class App(QtWidgets.QApplication):
             self.add_action(item, parent)
 
     def add_sidebar_items(self, items, parent):
+        print(items)
         if not items:
             return
         for item in items:
-            itype = item.get('type', None)
-            if itype == 'group':
+            if isinstance(item, Group):
                 self.add_group(item, parent)
-                continue
-            if itype == 'checkbox':
+            if isinstance(item, Bool):
                 self.add_checkbox(item, parent)
-                continue
-            if itype == 'slider':
+            if isinstance(item, Int) or isinstance(item, Float):
                 self.add_slider(item, parent)
-                continue
-            if itype == 'button':
-                self.add_button(item, parent)
-                continue
-            if itype == 'colorbutton':
-                self.add_colorbutton(item, parent)
-                continue
-            if itype == 'textedit':
+            # if itype == 'button':
+            #     self.add_button(item, parent)
+            #     continue
+            # if itype == 'colorbutton':
+            #     self.add_colorbutton(item, parent)
+            #     continue
+            if isinstance(item, String):
                 self.add_textedit(item, parent)
-                continue
-            if itype == 'stretch':
+            if isinstance(item, Empty):
                 parent.addStretch()
-                continue
 
     # ==========================================================================
     # add one
@@ -219,7 +215,7 @@ class App(QtWidgets.QApplication):
         return parent.addAction(text)
 
     def add_group(self, item, parent):
-        group = QtWidgets.QGroupBox(item.get('text', None))
+        group = QtWidgets.QGroupBox(item.Name)
         box = QtWidgets.QVBoxLayout()
         box.setContentsMargins(0, 0, 0, 0)
         box.setSpacing(8)
@@ -227,35 +223,35 @@ class App(QtWidgets.QApplication):
         group.setLayout(box)
         parent.addWidget(group)
 
-        self.add_sidebar_items(item['items'], box)
+        self.add_sidebar_items(item.Children, box)
 
     def add_slider(self, item, parent):
-        slider = Slider(item['name'],
-                        item['text'],
-                        item['value'],
-                        item['minval'],
-                        item['maxval'],
-                        item['step'],
-                        item['scale'],
-                        getattr(self.controller, item['slide']),
-                        getattr(self.controller, item['edit']))
+        slider = Slider(item.Name,
+                        item.Attributes.get("text", item.Name),
+                        item.Value,
+                        item.Min,
+                        item.Max,
+                        item.Step,
+                        item.Attributes.get("scale", 1),
+                        getattr(self.controller, item.Attributes.get("slide")),
+                        getattr(self.controller, item.Attributes.get("edit")))
         parent.addLayout(slider.layout)
         self.controller.controls[slider.name] = slider
 
     def add_checkbox(self, item, parent):
-        checkbox = QtWidgets.QCheckBox(item['text'])
-        checkbox.setCheckState(QtCore.Qt.Checked if item['state'] else QtCore.Qt.Unchecked)
-        if item['action']:
-            checkbox.stateChanged.connect(getattr(self.controller, item['action']))
+        checkbox = QtWidgets.QCheckBox(item.Attributes.get("text", item.Name))
+        checkbox.setCheckState(QtCore.Qt.Checked if item.Value else QtCore.Qt.Unchecked)
+        if item.Attributes.get("action"):
+            checkbox.stateChanged.connect(getattr(self.controller, item.Attributes.get("action")))
         parent.addWidget(checkbox)
 
     def add_button(self, item, parent):
         pass
 
     def add_textedit(self, item, parent):
-        textedit = TextEdit(item['text'],
-                            item['value'],
-                            getattr(self.controller, item['edit']))
+        textedit = TextEdit(item.Attributes.get("text", item.Name),
+                            item.Value,
+                            getattr(self.controller, item.Attributes.get("edit")))
         parent.addLayout(textedit.layout)
 
     def add_colorbutton(self, item, parent):

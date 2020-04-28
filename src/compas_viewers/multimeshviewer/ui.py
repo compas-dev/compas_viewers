@@ -1,4 +1,4 @@
-from .settings import SETTINGS
+from compas_traits import *
 
 UI = {
     'menubar': [
@@ -43,134 +43,122 @@ UI = {
         {'text': 'View:Top', 'action': 'set_view', 'args': [4], 'image': None},
         {'text': 'View:Capture', 'action': 'capture_image', 'args': [], 'image': None},
     ],
+
     'sidebar': [
-        {
-            'type': 'group',
-            'text': None,
-            'items': [
-                {
-                    'type': 'textedit',
-                    'text': None,
-                    'value': None,
-                    'edit': 'select_command'
-                },
-            ],
-        },
-        {
-            'type': 'group',
-            'text': None,
-            'items': [
-                {'type': 'checkbox', 'text': 'vertices', 'action': 'toggle_vertices', 'state': True, },
-                {'type': 'checkbox', 'text': 'edges', 'action': 'toggle_edges', 'state': True, },
-                {'type': 'checkbox', 'text': 'faces', 'action': 'toggle_faces', 'state': True, },
-            ]
-        },
-        {
-            'type': 'group',
-            'text': None,
-            'items': [
-                {
-                    'type': 'colorbutton',
-                    'text': 'color vertices',
-                    'value': '#222222',
-                    'action': 'change_vertices_color',
-                    'size': (16, 16),
-                },
-                {
-                    'type': 'colorbutton',
-                    'text': 'color edges',
-                    'value': '#666666',
-                    'action': 'change_edges_color',
-                    'size': (16, 16),
-                },
-            ]
-        },
-        {
-            'type': 'group',
-            'text': None,
-            'items': [
-                {
-                    'name': 'size_vertices',
-                    'type': 'slider',
+        Group([
+            String(
+                'Search Command...',
+                Attributes={'edit': 'select_command'}
+            )
+        ]),
+
+        Group([
+            Bool(True, Name='vertices', Attributes={'action': 'toggle_vertices'}),
+            Bool(True, Name='edges', Attributes={'action': 'toggle_edges'}),
+            Bool(True, Name='faces', Attributes={'action': 'toggle_faces'})
+        ]),
+
+        # # Traits.group([
+
+        # #     Traits.color(
+        # #         '#222222',
+        # #         Attributes={
+        # #             'text': 'color vertices',
+        # #             'action': 'change_vertices_color',
+        # #             'size': (16, 16)
+        # #         }
+        # #     ),
+
+        # #     Traits.color(
+        # #         '#666666',
+        # #         Attributes={
+        # #             'text': 'color edges',
+        # #             'action': 'change_edges_color',
+        # #             'size': (16, 16)
+        # #         }
+        # #     )
+
+        # # ]),
+
+
+        Group([
+
+            Float(
+                1,
+                Name='size_vertices',
+                Min=1,
+                Max=100,
+                Step=1,
+                Attributes={
+                    'scale' : 0.1,
                     'text': 'size vertices',
-                    'value': SETTINGS['camera.azimuth:value'],
-                    'minval': SETTINGS['camera.azimuth:minval'],
-                    'maxval': SETTINGS['camera.azimuth:maxval'],
-                    'step': SETTINGS['camera.azimuth:step'],
-                    'scale': SETTINGS['camera.azimuth:scale'],
                     'slide': 'slide_size_vertices',
-                    'edit': 'edit_size_vertices',
-                },
-                {
-                    'name': 'width_edges',
-                    'type': 'slider',
+                    'edit': 'edit_size_vertices'
+                }
+            ),
+
+            Float(
+                1,
+                Name='width_edges',
+                Min=1,
+                Max=100,
+                Step=1,
+                Attributes={
+                    'scale' : 0.1,
                     'text': 'width edges',
-                    'value': SETTINGS['edges.width:value'],
-                    'minval': SETTINGS['edges.width:minval'],
-                    'maxval': SETTINGS['edges.width:maxval'],
-                    'step': SETTINGS['edges.width:step'],
-                    'scale': SETTINGS['edges.width:scale'],
                     'slide': 'slide_width_edges',
-                    'edit': 'edit_width_edges',
-                },
-            ]
-        },
-        {
-            'type': 'group',
-            'text': None,
-            'items': [
-                {
-                    'name': 'azimuth',
-                    'type': 'slider',
-                    'text': 'azimuth',
-                    'value': SETTINGS['camera.azimuth:value'],
-                    'minval': SETTINGS['camera.azimuth:minval'],
-                    'maxval': SETTINGS['camera.azimuth:maxval'],
-                    'step': SETTINGS['camera.azimuth:step'],
-                    'scale': SETTINGS['camera.azimuth:scale'],
+                    'edit': 'edit_width_edges'
+                }
+            ),
+        ]),
+
+
+        Group([
+            Int(
+                35,
+                Name='azimuth',
+                Min=-180,
+                Max=180,
+                Attributes={
                     'slide': 'slide_azimuth',
                     'edit': 'edit_azimuth'
-                },
-                {
-                    'name': 'elevation',
-                    'type': 'slider',
-                    'text': 'elevation',
-                    'value': SETTINGS['camera.elevation:value'],
-                    'minval': SETTINGS['camera.elevation:minval'],
-                    'maxval': SETTINGS['camera.elevation:maxval'],
-                    'step': SETTINGS['camera.elevation:step'],
-                    'scale': SETTINGS['camera.elevation:scale'],
+                }
+            ),
+
+            Int(
+                -65,
+                Name='elevation',
+                Min=-180,
+                Max=180,
+                Attributes={
                     'slide': 'slide_elevation',
                     'edit': 'edit_elevation'
-                },
-                {
-                    'name': 'distance',
-                    'type': 'slider',
-                    'text': 'distance',
-                    'value': SETTINGS['camera.distance:value'],
-                    'minval': SETTINGS['camera.distance:minval'],
-                    'maxval': SETTINGS['camera.distance:maxval'],
-                    'step': SETTINGS['camera.distance:step'],
-                    'scale': SETTINGS['camera.distance:scale'],
+                }
+            ),
+
+            Int(
+                25,
+                Name='distance',
+                Min=0,
+                Max=100,
+                Attributes={
                     'slide': 'slide_distance',
                     'edit': 'edit_distance'
-                },
-                {
-                    'name': 'fov',
-                    'type': 'slider',
-                    'text': 'fov',
-                    'value': SETTINGS['camera.fov:value'],
-                    'minval': SETTINGS['camera.fov:minval'],
-                    'maxval': SETTINGS['camera.fov:maxval'],
-                    'step': SETTINGS['camera.fov:step'],
-                    'scale': SETTINGS['camera.fov:scale'],
+                }
+            ),
+
+            Int(
+                35,
+                Name='fov',
+                Min=10,
+                Max=170,
+                Attributes={
                     'slide': 'slide_fov',
                     'edit': 'edit_fov'
-                },
-            ]
-        },
-        {
-            'type': 'stretch',
-        }
+                }
+            )
+        ]),
+
+        Empty()
     ]
 }
