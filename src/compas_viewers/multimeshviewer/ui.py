@@ -58,27 +58,27 @@ UI = {
             Bool(True, Name='faces', Attributes={'action': 'toggle_faces'})
         ]),
 
-        # # Traits.group([
+        Group([
 
-        # #     Traits.color(
-        # #         '#222222',
-        # #         Attributes={
-        # #             'text': 'color vertices',
-        # #             'action': 'change_vertices_color',
-        # #             'size': (16, 16)
-        # #         }
-        # #     ),
+            Color(
+                0x222222,
+                Attributes={
+                    'text': 'color vertices',
+                    'action': 'change_vertices_color',
+                    'size': (16, 16)
+                }
+            ),
 
-        # #     Traits.color(
-        # #         '#666666',
-        # #         Attributes={
-        # #             'text': 'color edges',
-        # #             'action': 'change_edges_color',
-        # #             'size': (16, 16)
-        # #         }
-        # #     )
+            Color(
+                0x666666,
+                Attributes={
+                    'text': 'color edges',
+                    'action': 'change_edges_color',
+                    'size': (16, 16)
+                }
+            )
 
-        # # ]),
+        ]),
 
 
         Group([

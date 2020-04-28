@@ -183,16 +183,15 @@ class App(QtWidgets.QApplication):
                 self.add_checkbox(item, parent)
             if isinstance(item, Int) or isinstance(item, Float):
                 self.add_slider(item, parent)
-            # if itype == 'button':
-            #     self.add_button(item, parent)
-            #     continue
-            # if itype == 'colorbutton':
-            #     self.add_colorbutton(item, parent)
-            #     continue
+            if isinstance(item, Color):
+                self.add_colorbutton(item, parent)
             if isinstance(item, String):
                 self.add_textedit(item, parent)
             if isinstance(item, Empty):
                 parent.addStretch()
+            # if itype == 'button':
+            #     self.add_button(item, parent)
+            #     continue
 
     # ==========================================================================
     # add one
@@ -255,10 +254,10 @@ class App(QtWidgets.QApplication):
         parent.addLayout(textedit.layout)
 
     def add_colorbutton(self, item, parent):
-        button = ColorButton(item['text'],
-                             color=item['value'],
-                             size=item.get('size'),
-                             action=getattr(self.controller, item.get('action')))
+        button = ColorButton(item.Attributes.get("text", item.Name),
+                             color=item.Hex,
+                             size=item.Attributes.get("size"),
+                             action=getattr(self.controller, item.Attributes.get("action")))
         parent.addLayout(button.layout)
 
 
