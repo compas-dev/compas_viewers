@@ -22,7 +22,12 @@ from .scene import Scene
 from compas.datastructures import Mesh
 from compas_viewers.multimeshviewer import MeshObject
 
+from compas.geometry import Line
+
+from compas_viewers.multimeshviewer import LineObject
+
 Scene.register(Mesh, MeshObject)
+Scene.register(Line, LineObject)
 
 
 __all__ = [name for name in dir() if not name.startswith('_')]

@@ -178,6 +178,7 @@ class GLWidget(QOpenGLWidget):
         if self.isActiveWindow() and self.underMouse():
             self.mouse.buttons['left'] = False
             self.mouse.buttons['right'] = False
+            self.update()
 
     def wheelEvent(self, event):
         if self.isActiveWindow() and self.underMouse():

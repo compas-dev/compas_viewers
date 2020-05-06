@@ -53,9 +53,13 @@ class Manager(object):
             # vertices
             verticesitem = QtWidgets.QTreeWidgetItem(meshitem)
             verticesitem.setText(0, "Vertices")
-            for key in item.datastructure.vertices():
-                vertexitem = QtWidgets.QTreeWidgetItem(verticesitem)
-                vertexitem.setText(0, "{}".format(key))
+
+            if hasattr(item,'datastructure'):
+                geometry = item.datastructure
+
+                for key in geometry.vertices():
+                    vertexitem = QtWidgets.QTreeWidgetItem(verticesitem)
+                    vertexitem.setText(0, "{}".format(key))
             # edges
             edgesitem = QtWidgets.QTreeWidgetItem(meshitem)
             edgesitem.setText(0, "Edges")

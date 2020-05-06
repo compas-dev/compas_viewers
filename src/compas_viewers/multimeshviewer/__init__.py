@@ -3,7 +3,8 @@ from __future__ import absolute_import
 from __future__ import division
 
 from .objects.meshobject import MeshObject
+from .objects.lineobject import LineObject
 from .app import MultiMeshViewer
 from .scene import Scene
 
-__all__ = ['MultiMeshViewer', 'MeshObject', 'Scene']
+__all__ = ['MultiMeshViewer', 'MeshObject', 'LineObject', 'Scene']
