@@ -1,4 +1,8 @@
-# COMPAS viewers
+# DEPRECATED: COMPAS viewers
+
+THIS PACKAGE IS DEPRECATED IN FAVOUR OF compas_view2
+
+---
 
 Standalone viewers for COMPAS based on PySide2 and PyOpenGL.
 
